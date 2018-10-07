@@ -1,9 +1,10 @@
+const Sequelize = require('sequelize');
 const {sequelize} = require('../db/database');
 
 
 const Todo = sequelize.define('Todo', {
     title: {
-        type: Sequelize.String,
+        type: Sequelize.STRING,
         validate: {
             notEmpty: true,
             notNull: true
