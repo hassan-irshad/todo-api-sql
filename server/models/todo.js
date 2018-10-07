@@ -7,19 +7,25 @@ const Todo = sequelize.define('Todo', {
         type: Sequelize.STRING,
         validate: {
             notEmpty: true,
-            notNull: true
         }
     },
     description: {
         type: Sequelize.STRING,
         validate: {
-            notEmpty: true,
-            notNull: true,
+            notEmpty: true
         }
     },
     done: {
         type: Sequelize.BOOLEAN
     }
 });
+
+// Todo.sync({force: true}).then(() => {
+//     // Table created
+//     return Todo.create({
+//       title: 'John',
+//       description: 'Hancock'
+//     });
+//   });
 
 module.exports = {Todo};

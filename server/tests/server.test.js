@@ -1,6 +1,7 @@
 const expect = require('expect');
 const request = require('supertest');
 
+const {app} = require('../server');
 const {Todo} = require('../models/todo');
 
 var testTodo = {
@@ -16,6 +17,8 @@ beforeEach((done) => {
     }).then(() => done());
 });
 
+
+
 describe('GET /todo/api/v1.0/tasks', () => {
     it('should return all todos', (done) => {
         request(app)
@@ -24,6 +27,6 @@ describe('GET /todo/api/v1.0/tasks', () => {
             .expect((res) => {
                 expect(res.body.length).toBe(1);
             })
-            .end();
+            .end(done);
     });
 });
