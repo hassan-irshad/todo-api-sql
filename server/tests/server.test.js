@@ -5,6 +5,7 @@ const {app} = require('../server');
 const {Todo} = require('../models/todo');
 
 var testTodo = {
+    id: '50',
     title: 'Test',
     description: 'It is for test'
 }
@@ -53,3 +54,30 @@ describe('POST /todo/api/v1.0/tasks', () => {
             .end(done);
     });
 }); 
+
+describe('GET /todo/api/v1.0/tasks/:id', () => {
+    it('should return todo of given Id', (done) => {
+        request(app)
+            .get(`/todo/api/v1.0/tasks/${testTodo.id}`)
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.title).toBe(testTodo.title);
+                expect(res.body.description).toBe(testTodo.description);
+            })
+            .end(done);
+    });
+    it('should return 400 with invalid id', (done) => {
+        var id = 'njkdnsankcndvn';
+        request(app)
+            .get(`/todo/api/v1.0/tasks/${id}`)
+            .expect(400)
+            .end(done);
+    });
+    it('should return 404 if todo not found', (done) => {
+        var id = '100';
+        request(app)
+            .get(`/todo/api/v1.0/tasks/${id}`)
+            .expect(404)
+            .end(done);
+    });
+});
