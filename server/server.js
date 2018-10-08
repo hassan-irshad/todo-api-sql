@@ -60,6 +60,19 @@ app.put('/todo/api/v1.0/tasks/:id', (req, res) => {
         res.status(400).send();
     });
 });
+app.delete('/todo/api/v1.0/tasks/:id', (req, res) => {
+    var id = req.params.id;
+
+    Todo.destroy({where: {id}}).then((todo) => {
+        if(!todo) {
+            return res.sendStatus(404);
+        }
+        res.sendStatus(200);
+    }).catch((e) => {
+        res.sendStatus(400);
+    });
+});
+
 
 app.listen(5000, () => {
     console.log('Listneing on port 5000');

@@ -119,9 +119,6 @@ describe('DELETE /todo/api/v1.0/tasks/:id', () => {
         request(app)
             .delete(`/todo/api/v1.0/tasks/${testTodo.id}`)
             .expect(200)
-            .expect((res) => {
-                expect(res.body).toBe(1);
-            })
             .end(done);
     });
     it('should return 400 with invalid id', (done) => {
