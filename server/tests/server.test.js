@@ -17,8 +17,6 @@ beforeEach((done) => {
     }).then(() => done());
 });
 
-
-
 describe('GET /todo/api/v1.0/tasks', () => {
     it('should return all todos', (done) => {
         request(app)
@@ -30,3 +28,29 @@ describe('GET /todo/api/v1.0/tasks', () => {
             .end(done);
     });
 });
+
+describe('POST /todo/api/v1.0/tasks', () => {
+    it('should create a new todo', (done) => {
+        var todo = {
+            title: 'Hello',
+            description: 'Hello World'
+        }
+        request(app)
+            .post('/todo/api/v1.0/tasks')
+            .send(todo)
+            .expect(200)
+            .expect((res) => {
+                expect(res.body[1].dataValues.title).toBe(todo.title);
+            })
+            .end(done);
+    });
+    it('should return 400 if data is invalid', (done) => {
+        request(app)
+            .post('/todo/api/v1.0/tasks')
+            .expect(400)
+            .expect((res) => {
+                expect(res.body).toBe([]);
+            })
+            .end(done);
+    });
+}); 
