@@ -27,6 +27,20 @@ app.post('/todo/api/v1.0/tasks', (req, res) => {
     });
 });
 
+app.get('/todo/api/v1.0/tasks/:id', (req, res) => {
+    var id = req.params.id;
+
+    Todo.findById(id).then((todo) => {
+        if(!todo) {
+            res.status(404).send();
+        }
+
+        res.status(200).send(todo);
+    }).catch((e) => {
+        res.status(400).send();
+    });
+});
+
 app.listen(5000, () => {
     console.log('Listneing on port 5000');
 });
