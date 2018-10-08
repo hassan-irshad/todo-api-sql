@@ -81,3 +81,37 @@ describe('GET /todo/api/v1.0/tasks/:id', () => {
             .end(done);
     });
 });
+describe('PUT /todo/api/v1.0/tasks/:id', () => {
+    it('should update todo', (done) => {
+        var id = 50;
+        var todo  = {
+            title: 'Yoga',
+            description: 'sfskl',
+            done: true
+        }
+        request(app)
+            .put(`/todo/api/v1.0/tasks/${id}`)
+            .send(todo, {where: {id}})
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.title).toBe(todo.title);
+                expect(res.body.description).toBe(todo.description);
+            })
+            .end(done);
+    });
+    it('should return 400 with invalid id', (done) => {
+        var id = 'njkdnsankcndvn';
+        request(app)
+            .put(`/todo/api/v1.0/tasks/${id}`)
+            .expect(400)
+            .end(done);
+    });
+    it('should return 404 if todo not found', (done) => {
+        var id = '100';
+        request(app)
+            .put(`/todo/api/v1.0/tasks/${id}`)
+            .expect(404)
+            .end(done);
+    });
+    
+});
