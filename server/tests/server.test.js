@@ -40,17 +40,16 @@ describe('POST /todo/api/v1.0/tasks', () => {
             .send(todo)
             .expect(200)
             .expect((res) => {
-                expect(res.body[1].dataValues.title).toBe(todo.title);
+                expect(res.body.title).toBe(todo.title);
+                expect(res.body.description).toBe(todo.description);
             })
             .end(done);
     });
     it('should return 400 if data is invalid', (done) => {
         request(app)
             .post('/todo/api/v1.0/tasks')
+            .send({title: '', description: 'Hello'})
             .expect(400)
-            .expect((res) => {
-                expect(res.body).toBe([]);
-            })
             .end(done);
     });
 }); 
