@@ -113,5 +113,30 @@ describe('PUT /todo/api/v1.0/tasks/:id', () => {
             .expect(404)
             .end(done);
     });
-    
+});
+describe('DELETE /todo/api/v1.0/tasks/:id', () => {
+    it('should remove the todo', (done) => {
+        request(app)
+            .delete(`/todo/api/v1.0/tasks/${testTodo.id}`)
+            .expect(200)
+            .expect((res) => {
+                expect(res.body).toBe(1);
+            })
+            .end(done);
+    });
+    it('should return 400 with invalid id', (done) => {
+        var id = 'njkdnsankcndvn';
+        request(app)
+            .delete(`/todo/api/v1.0/tasks/${id}`)
+            .expect(400)
+            .end(done);
+    });
+    it('should return 404 if todo not found', (done) => {
+        var id = '100';
+        request(app)
+            .delete(`/todo/api/v1.0/tasks/${id}`)
+            .expect(404)
+            .end(done);
+    });
+
 });
